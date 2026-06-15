@@ -14,7 +14,6 @@ def get_sequence_around_pos(matrix, pos, n):
   return matrix[:, pos-n:pos+n+2]
 
 
-
 def reverse_complement_matrix(matrix):
   """Computes the reverse complement for a matrix of biological sequences."""
   reverse_complement_matrix = []
