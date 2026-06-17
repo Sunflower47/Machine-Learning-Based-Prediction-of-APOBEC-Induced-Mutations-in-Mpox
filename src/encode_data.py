@@ -35,8 +35,8 @@ def encode_sequence(seq):
   return consensus_encoded
 
 
-df_not_mutated = pd.read_pickle('non_mutated_positions_80.pkl.gz')
-df_mutated = pd.read_pickle('mutated_positions_80.pkl.gz')
+df_not_mutated = pd.read_pickle('data/interim/non_mutated_positions_80.pkl.gz')
+df_mutated = pd.read_pickle('data/interim/mutated_positions_80.pkl.gz')
 
 df_not_mutated['seq_encoded'] = df_not_mutated['seq_filtered'].apply(encode_sequence)
 df_mutated['seq_encoded'] = df_mutated['seq_filtered'].apply(encode_sequence)
@@ -48,4 +48,4 @@ df = pd.concat([df_mutated[['pos', 'seq_encoded', 'label']], df_not_mutated[['po
 df = df.sort_values(by='pos')
 
 
-df.to_pickle('input_encoded.pkl.gz', compression='gzip')
+df.to_pickle('data/interim/input_encoded.pkl.gz', compression='gzip')
