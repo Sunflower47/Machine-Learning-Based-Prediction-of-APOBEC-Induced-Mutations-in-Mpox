@@ -27,7 +27,7 @@ def process_motif_dataframe(matrix, positions, motif_name, opposite_patterns):
   df_filtered_['motif'] = motif_name
   return df, df_filtered_
 
-filename = 'final_alignment_updated.afa'
+filename = 'data/raw/final_alignment_updated.afa'
 alignment = AlignIO.read(filename, "fasta")
 matrix = np.array([list(rec.seq) for rec in alignment])
 
@@ -49,7 +49,7 @@ df_final['pos_end'] = df_final['pos'] + 1
 df_final['counter'] = df_final['counter'].apply(
             lambda x: {str(k): v for k, v in x.items()})
 df_final[['pos', 'pos_end', 'motif', 'counter']].to_csv(
-            'apobec_positions_list.csv', index=False, sep='\t')
+            'data/interim/apobec_positions_list.csv', index=False, sep='\t')
 
 df_tc_tt = df_tc_tt.copy()
 df_ga_aa = df_ga_aa.copy()
@@ -63,4 +63,4 @@ df_ga_aa['counter'] = df_ga_aa['counter'].apply(
     lambda x: {str(k): v for k, v in x.items()})
 
 pd.concat([df_tc_tt, df_ga_aa], ignore_index=True).to_csv(
-        'all_positions_list.csv', index=False, sep='\t')
+        'data/interim/all_positions_list.csv', index=False, sep='\t')
