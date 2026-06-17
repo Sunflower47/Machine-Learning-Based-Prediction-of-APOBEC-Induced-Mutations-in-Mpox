@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_pickle('input_encoded.pkl.gz')
+df = pd.read_pickle('data/interim/input_encoded.pkl.gz')
 df = df.reset_index(drop=True)
 
-df_pos_counter = pd.read_pickle('positions_counter.plk.gz')
+df_pos_counter = pd.read_pickle('data/interim/positions_counter.plk.gz')
 
 df_reg = df[df.label == 0].copy()
 df_reg['counter'] = df_reg.label.copy()
@@ -38,4 +38,4 @@ data_to_save = {
     'pos': df_input.pos.to_numpy()
 }
 
-np.savez_compressed('models_input.npz', **data_to_save)
+np.savez_compressed('data/processed/models_input.npz', **data_to_save)
