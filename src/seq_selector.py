@@ -7,7 +7,7 @@ import re
 import pandas as pd
 from collections import Counter
 import ast
-
+import gzip
 
 def get_sequence_around_pos(matrix, pos, n):
   """Extract sequence region around a specific position."""
@@ -27,8 +27,10 @@ def remove_row(arr, idx):
   """Remove a specific row from the matrix."""
   return np.vstack([arr[:idx], arr[idx+1:]])
 
-path = 'data/raw/final_alignment_updated.afa'
-alignment = AlignIO.read(path, "fasta")
+path = 'data/raw/final_alignment_updated.afa.gz'
+
+with gzip.open(path, "rt") as handle:
+    alignment = AlignIO.read(handle, "fasta")
 matrix = np.array([list(rec.seq) for rec in alignment])
 
 target_id = 'NC_063383.1' #reference genome
