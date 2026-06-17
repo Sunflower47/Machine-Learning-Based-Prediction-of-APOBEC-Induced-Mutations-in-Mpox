@@ -27,14 +27,14 @@ def remove_row(arr, idx):
   """Remove a specific row from the matrix."""
   return np.vstack([arr[:idx], arr[idx+1:]])
 
-path = 'final_alignment_updated.afa'
+path = 'data/raw/final_alignment_updated.afa'
 alignment = AlignIO.read(path, "fasta")
 matrix = np.array([list(rec.seq) for rec in alignment])
 
 target_id = 'NC_063383.1' #reference genome
 row_index = [rec.id for rec in alignment].index(target_id)
 
-df_positions = pd.read_csv('all_positions_list.csv', sep='\t')
+df_positions = pd.read_csv('data/interim/all_positions_list.csv', sep='\t')
 
 #Filter sequences around TC motifs
 df_positions.counter = df_positions.counter.apply(lambda x: Counter(ast.literal_eval(x)))
@@ -94,7 +94,7 @@ for i in range(tc.shape[0]):
 
 tc['seq_filtered'] = list(seq_filtered)
 
-tc[['pos', 'motifs', 'counter', 'motif', 'seq_filtered']].to_pickle('non_mutated_positions_'+str(n)+'.pkl.gz', compression='gzip')
+tc[['pos', 'motifs', 'counter', 'motif', 'seq_filtered']].to_pickle('data/interim/non_mutated_positions_'+str(n)+'.pkl.gz', compression='gzip')
 
 #Filter mutated sequences
 df_tc_tt = pd.read_csv('apobec_positions_list.csv', sep='\t')
@@ -110,4 +110,4 @@ for i in range(df_tc_tt.shape[0]):
 
 df_tc_tt['seq_filtered'] = list(seq_filtered_tctt)
 
-df_tc_tt[['pos', 'counter', 'motif', 'seq_filtered']].to_pickle('mutated_positions_'+str(n)+'.pkl.gz', compression='gzip')
+df_tc_tt[['pos', 'counter', 'motif', 'seq_filtered']].to_pickle('data/interim/mutated_positions_'+str(n)+'.pkl.gz', compression='gzip')
