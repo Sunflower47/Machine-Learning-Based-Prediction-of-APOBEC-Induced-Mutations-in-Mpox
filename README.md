@@ -1,5 +1,5 @@
 # 🦠 Project Goal
-To develop machine learning models for predicting APOBEC-induced mutations at TC motif sites within monkeypox virus genomes based on their flanking nucleotide context.
+To develop machine learning models for predicting APOBEC-induced mutations at TC motif sites in monkeypox virus genomes based on their flanking nucleotide context.
 
 
 # 🧬 Data Pipeline & Preprocessing
