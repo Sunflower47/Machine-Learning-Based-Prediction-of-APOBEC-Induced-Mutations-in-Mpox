@@ -2,6 +2,7 @@ from Bio import AlignIO, SeqIO
 import numpy as np
 from collections import Counter
 import pandas as pd
+import gzip
 
 def process_motif_dataframe(matrix, positions, motif_name, opposite_patterns):
   """Select and filter sequence positions of dinucleotide motifs."""
@@ -27,8 +28,10 @@ def process_motif_dataframe(matrix, positions, motif_name, opposite_patterns):
   df_filtered_['motif'] = motif_name
   return df, df_filtered_
 
-filename = 'data/raw/final_alignment_updated.afa'
-alignment = AlignIO.read(filename, "fasta")
+path = 'data/raw/final_alignment_updated.afa.gz'
+
+with gzip.open(path, "rt") as handle:
+    alignment = AlignIO.read(handle, "fasta")
 matrix = np.array([list(rec.seq) for rec in alignment])
 
 dinucleotides = np.char.add(matrix[:, :-1], matrix[:, 1:])
