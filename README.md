@@ -86,10 +86,11 @@ Based on the **SHAP analysis**, the model successfully captured complex degenera
 * **Decreased Mutation Susceptibility:** A lower probability of mutation is characteristically associated with sequence contexts matching the **`RTCYYW`** motif framework. 
 * **Increased Mutation Risk:** Conversely, the presence of the **`YTCRRS`** pattern is interpreted by the model as a strong positive driver, significantly elevating the predicted likelihood of a mutational event.
 
-> *The SHAP summary plots are fully documented and can be reviewed inside the XGBoost_model.ipynb.*
+> The SHAP summary plots are fully documented and can be reviewed inside the XGBoost_model.ipynb.
 
 # 🧠 Deep Learning Approach
 🛠️ **Overfitting Mitigation & Checkpointing:** To prevent overfitting, an early stopping mechanism with model checkpointing was implemented, tracking the best performance metric on the validation set and saving the optimal weights. However, this strategy was bypassed for the **Weighted Mode** regime, as the heavy class penalty coefficients introduced significant gradient instability during training, making standard validation-loss tracking unreliable.
+
 🧬 **Strand-Aware Data Augmentation:** To leverage the double-stranded nature of viral DNA and expand the model's robustness, data augmentation was performed by incorporating predictions from both the forward and reverse-complementary strands during the evaluation phase.
 
 ## 3. CNN
@@ -102,6 +103,9 @@ Based on the **SHAP analysis**, the model successfully captured complex degenera
 | **30 bp** | Baseline | 0.64 | 0.16 | 0.13 | 0.62 | 0.21 |
 | | Frequency-Aware (Weighted) | 0.63 | 0.15 | 0.11 | **0.88** | 0.19 |
 | | Feature-Enriched | **0.67** | **0.20** | **0.14** | 0.67 | **0.24** |
+
+> The final ROC and PR curves can be found in the corresponding `.ipynb` files.
+
 ## 4. Attention-based CNN
 
 | Window | Training Regime | ROC-AUC | PR-AUC | Precision | Recall | F1-Score |
@@ -112,4 +116,23 @@ Based on the **SHAP analysis**, the model successfully captured complex degenera
 | **30 bp** | Baseline | 0.63 | 0.17 | 0.13 | 0.63 | 0.21 |
 | | Frequency-Aware (Weighted) | 0.63 | 0.16 | 0.11 | **0.79** | 0.19 |
 | | Feature-Enriched | **0.67** | **0.20** | **0.14** | 0.73 | **0.23** |
+
+> The final ROC and PR curves can be found in the corresponding `.ipynb` files.
+
+# 📈 Feature Significance Analysis
+
+Among the engineered non-sequence features, the **Grantham score** contributed the most significant predictive weight across all models (though it fundamentally remains less influential than the immediate nucleotide flank context). Interestingly, a clear negative correlation was captured: **the higher the Grantham score, the lower the predicted probability of a mutation event**. 
+
+This phenomenon is strongly indicative of **purifying (negative) selection** operating on the viral population. In nature, mutations that cause radical amino acid substitutions with high Grantham scores dramatically alter the physicochemical properties of the resulting proteins, often compromising viral fitness. Consequently, these deleterious variants are rapidly eliminated by natural selection, preventing such mutated genomic samples from ever reaching sequential observation.
+
+<img width="989" height="590" alt="image" src="https://github.com/user-attachments/assets/a5992fb7-7be4-4e6e-92aa-e83e10edbff8" />
+
+> The detailed SHAP summary plots and feature importance charts for XGBoost models can be found in the corresponding `.ipynb` files.
+
+# 📌 Conclusions & Key Takeaways
+
+1. **Identification of Biochemical Motifs:** Interpretation of the models successfully extracted degenerate flanking patterns that dictate enzyme mutational preferences. The `RTCYYW` sequence framework acts as a strong mutational constraint, whereas the presence of the `YTCRRS` pattern was recognized as a major mutation-promoting driver.
+2. **Impact of Grantham Substitution Scores:** Feature engineering experiments demonstrated that the integration of physicochemical properties—specifically the Grantham amino acid substitution score—exerted a dominant positive influence on improving the overall predictive power of the models.
+3. **Phylogenetic Bias Correction:** Implementing class-weighting coefficients derived from true ancestral mutation frequencies effectively countered training data imbalance. This adjustment corrected systemic model bias and significantly elevated classifier sensitivity (`Recall`) in isolating true Class 1 mutational events.
+4. **Classical ML vs. Deep Learning Trade-offs:** A rigorous comparative analysis revealed that advanced deep learning architectures (Custom CNN and CNN with Attention) do not provide a performance advantage over classical tree-based ensembles (XGBoost) for this genomic sequence screening task, while classical ML retains superior interpretability and efficiency.
 
