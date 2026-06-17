@@ -3,10 +3,12 @@ from collections import Counter
 import pandas as pd
 from Bio import AlignIO, SeqIO
 from Bio.Seq import Seq
+import gzip
 
-path = 'data/raw/final_alignment_updated.afa'
+path = 'data/raw/final_alignment_updated.afa.gz'
 
-alignment = AlignIO.read(path, "fasta")
+with gzip.open(path, "rt") as handle:
+    alignment = AlignIO.read(handle, "fasta")
 matrix = np.array([list(rec.seq) for rec in alignment])
 
 target_id = 'NC_063383.1'
