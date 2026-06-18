@@ -1,7 +1,7 @@
 import numpy as np
 from collections import Counter
 import pandas as pd
-from Bio import AlignIO, SeqIO
+from Bio import AlignIO
 from Bio.Seq import Seq
 import gzip
 
@@ -118,7 +118,6 @@ for row_aa in score_matrix.index:
             full_matrix.loc[row_aa, col_aa] = val
             full_matrix.loc[col_aa, row_aa] = val
 
-full_matrix.loc['C', 'I']
 
 def get_grantham_safe(pair, matrix):
     if pair[0] == '*' and pair[1] == '*':
