@@ -24,7 +24,7 @@ Additionally, to address the severe class imbalance in the dataset, **class weig
 2. **Weighted:** Baseline features integrated with true mutation frequencies.
 3. **With Additional Features:** Nucleotide context combined with DNA secondary structure parameters and Grantham scores.
 
----
+
 ## 1. Logistic Regression
 | Window | Training Regime | ROC-AUC | PR-AUC | Precision | Recall | F1-Score |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -136,3 +136,25 @@ This phenomenon is strongly indicative of **purifying (negative) selection** ope
 3. **Phylogenetic Bias Correction:** Implementing class-weighting coefficients derived from true ancestral mutation frequencies effectively countered training data imbalance. This adjustment corrected systemic model bias and significantly elevated classifier sensitivity (`Recall`) in isolating true Class 1 mutational events.
 4. **Classical ML vs. Deep Learning Trade-offs:** A rigorous comparative analysis revealed that advanced deep learning architectures (Custom CNN and CNN with Attention) do not provide a performance advantage over classical ML algorithms.
 
+# 🚀 How to Run the Project
+
+```bash
+# 1. Environment Setup
+pip install -r requirements.txt
+
+# 2. Alignment Downloading 
+gdown 1ti4UATjOvLQRju_AM_ZNqm0Bd3gf0GYK -O data/raw/final_alignment_updated.afa.gz
+
+# 3. Data Preprocessing Pipeline 
+python src/find_positions.py
+python src/seq_selector.py
+python src/count_frequency.py
+python src/encode_data.py
+python src/prepare_features.py
+
+# 4. Model Training & Analysis
+jupyter notebook LogReg_model.ipynb
+jupyter notebook XGBoost_model.ipynb
+jupyter notebook CNN_models.ipynb
+```
+> ❗ Steps 2 and 3 can be skipped, as all the necessary files are already present in the directory.
