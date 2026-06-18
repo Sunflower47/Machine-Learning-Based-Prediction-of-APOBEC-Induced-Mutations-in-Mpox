@@ -21,7 +21,7 @@ To analyze the impact of genomic context length, all experiments were conducted 
 Additionally, to address the severe class imbalance in the dataset, **class weighting** was implemented across all architectures to ensure the minority class is heavily penalized during training. Every model was evaluated under three progressive training regimes across both window sizes:
 
 1. **Baseline:** Trained strictly on One-Hot Encoded flanking sequences with masked target motifs.
-2. **Weighted:** Baseline features integrated with true mutation frequencies.
+2. **Weighted:** Baseline models trained with class weights to penalize minority class misclassifications.
 3. **With Additional Features:** Nucleotide context combined with DNA secondary structure parameters and Grantham scores.
 
 
