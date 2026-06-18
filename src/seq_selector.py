@@ -1,9 +1,7 @@
-from Bio import AlignIO, SeqIO
+from Bio import AlignIO
 from Bio.Seq import Seq
 
 import numpy as np
-import matplotlib.pyplot as plt
-import re
 import pandas as pd
 from collections import Counter
 import ast
@@ -99,7 +97,7 @@ tc['seq_filtered'] = list(seq_filtered)
 tc[['pos', 'motifs', 'counter', 'motif', 'seq_filtered']].to_pickle('data/interim/non_mutated_positions_'+str(n)+'.pkl.gz', compression='gzip')
 
 #Filter mutated sequences
-df_tc_tt = pd.read_csv('apobec_positions_list.csv', sep='\t')
+df_tc_tt = pd.read_csv('data/interim/apobec_positions_list.csv', sep='\t')
 df_tc_tt = df_tc_tt[(df_tc_tt.pos > 600)&(df_tc_tt.pos < 191500)]
 df_tc_tt['seq'] = df_tc_tt.pos.apply(lambda x: get_sequence_around_pos(matrix,x,n))
 df_tc_tt['seq'] = df_tc_tt.apply(lambda x: x.seq if x.motif=='tc/tt' else reverse_complement_matrix(x.seq), axis=1)
