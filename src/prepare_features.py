@@ -4,7 +4,7 @@ import pandas as pd
 df = pd.read_pickle('data/interim/input_encoded.pkl.gz')
 df = df.reset_index(drop=True)
 
-df_pos_counter = pd.read_pickle('data/interim/positions_counter.plk.gz')
+df_pos_counter = pd.read_pickle('data/interim/positions_counter.pkl.gz')
 
 df_reg = df[df.label == 0].copy()
 df_reg['counter'] = df_reg.label.copy()
