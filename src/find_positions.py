@@ -1,4 +1,4 @@
-from Bio import AlignIO, SeqIO
+from Bio import AlignIO
 import numpy as np
 from collections import Counter
 import pandas as pd
