@@ -34,4 +34,4 @@ leaves = node.get_leaf_names()
 df_snp_filt['descendants'] = df_snp_filt['node'].apply(lambda x: tree.search_nodes(name=x)[0].get_leaf_names())
 
 positions_counter = df_snp_filt[['pos', 'state1', 'state2', 'counter']].drop_duplicates()
-positions_counter.to_pickle('data/interim/positions_counter.plk.gz', compression='gzip')
+positions_counter.to_pickle('data/interim/positions_counter.pkl.gz', compression='gzip')
